@@ -1,0 +1,7 @@
+Flask
+flask-cors
+presidio-analyzer
+presidio-anonymizer
+scikit-learn
+pandas
+langdetect
