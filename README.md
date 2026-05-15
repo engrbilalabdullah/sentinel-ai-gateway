@@ -13,4 +13,4 @@
 
 **1. Clone the repository:**
 ```bash
-git clone [https://github.com/YOUR_USERNAME/sentinel-ai-gateway.git](https://github.com/YOUR_USERNAME/sentinel-ai-gateway.git)# sentinel-ai-gateway
+git clone [https://github.com/YOUR_USERNAME/sentinel-ai-gateway.git](https://github.com/YOUR_USERNAME/sentinel-ai-gateway.git)
