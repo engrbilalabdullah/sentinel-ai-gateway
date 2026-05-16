@@ -9,8 +9,28 @@
 - **Ultra-Low Latency:** Processes and sanitizes prompts in under 25 milliseconds.
 - **Dynamic Dashboard:** Interactive HTML/JS frontend with live threshold calibration sliders.
 
-## 🚀 How to Run Locally
+## 📂 Project Structure
 
-**1. Clone the repository:**
-```bash
-git clone [https://github.com/YOUR_USERNAME/sentinel-ai-gateway.git](https://github.com/YOUR_USERNAME/sentinel-ai-gateway.git)
+```text
+sentinel-ai-gateway/
+│
+├── data/
+│   └── final_eval.csv             # Custom dataset of 150 diverse prompts
+│
+├── detectors/
+│   ├── rule_detector.py           # Fast Regex-based keyword filtering
+│   └── semantic_detector.py       # ML Model (TF-IDF + Logistic Regression)
+│
+├── pii/
+│   └── presidio_custom.py         # Customized Presidio engine for PK_CNIC/PHONE
+│
+├── policy/
+│   └── policy_engine.py           # Core logic evaluating risks and thresholds
+│
+├── results/
+│   └── evaluation_results.csv     # Output of the automated evaluation script
+│
+├── index.html                     # Dynamic Web Dashboard UI
+├── main.py                        # Flask API Backend 
+├── requirements.txt               # Project dependencies
+└── run_evaluation.py              # Automated stress-testing script
