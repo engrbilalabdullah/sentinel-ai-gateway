@@ -69,7 +69,6 @@ class PIIHandler:
             "composite_risk": composite_risk
         }
 
-# Testing the custom recognizers
 if __name__ == "__main__":
     handler = PIIHandler()
     
