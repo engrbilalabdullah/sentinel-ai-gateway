@@ -3,14 +3,13 @@ from flask_cors import CORS
 import time
 from langdetect import detect
 
-# Humari banai hui 4 core files ko import karna
 from detectors.rule_detector import RuleDetector
 from detectors.semantic_detector import SemanticDetector
 from pii.presidio_custom import PIIHandler
 from policy.policy_engine import PolicyEngine
 
 app = Flask(__name__)
-CORS(app) # to connect front end
+CORS(app) 
 
 print("Initializing AI Models... Please wait (10-15 seconds).")
 rule_detector = RuleDetector()
