@@ -5,8 +5,6 @@ class PIIHandler:
     def __init__(self):
         self.analyzer = AnalyzerEngine()
         self.anonymizer = AnonymizerEngine()
-
-        # 1. Pakistani CNIC Recognizer
         cnic_pattern = Pattern(name="cnic_regex", regex=r"\d{5}-\d{7}-\d{1}", score=0.6)
         cnic_recognizer = PatternRecognizer(
             supported_entity="CNIC", 
@@ -15,7 +13,6 @@ class PIIHandler:
         )
         self.analyzer.registry.add_recognizer(cnic_recognizer)
 
-        # 2. Student ID Recognizer (COMSATS format)
         id_pattern = Pattern(name="student_id_regex", regex=r"[A-Z]{2}\d{2}-[A-Z]{3}-\d{3}", score=0.8)
         id_recognizer = PatternRecognizer(
             supported_entity="STUDENT_ID", 
@@ -24,9 +21,6 @@ class PIIHandler:
         )
         self.analyzer.registry.add_recognizer(id_recognizer)
 
-        # --- ADDITIONAL SECURITY CUSTOMIZATIONS ---
-
-        # 3. Pakistani Phone Number Recognizer (+92 or 03)
         phone_pattern = Pattern(name="pk_phone_regex", regex=r"(\+92|0)[3][0-9]{2}-?[0-9]{7}", score=0.7)
         phone_recognizer = PatternRecognizer(
             supported_entity="PK_PHONE", 
@@ -35,7 +29,6 @@ class PIIHandler:
         )
         self.analyzer.registry.add_recognizer(phone_recognizer)
 
-        # 4. OpenAI API Key Recognizer (Crucial for LLM Security)
         api_pattern = Pattern(name="api_key_regex", regex=r"sk-[a-zA-Z0-9]{32,}", score=0.9)
         api_recognizer = PatternRecognizer(
             supported_entity="API_KEY", 
@@ -44,7 +37,6 @@ class PIIHandler:
         )
         self.analyzer.registry.add_recognizer(api_recognizer)
 
-        # 5. Pakistani Bank IBAN Recognizer
         iban_pattern = Pattern(name="pk_iban_regex", regex=r"PK\d{2}[A-Z]{4}\d{16}", score=0.9)
         iban_recognizer = PatternRecognizer(
             supported_entity="PK_IBAN", 
@@ -54,7 +46,6 @@ class PIIHandler:
         self.analyzer.registry.add_recognizer(iban_recognizer)
 
     def analyze_and_anonymize(self, text):
-        # Perform analysis for standard and custom entities
         results = self.analyzer.analyze(
             text=text, 
             entities=["PERSON", "EMAIL_ADDRESS", "CNIC", "STUDENT_ID", "PK_PHONE", "API_KEY", "PK_IBAN"], 
@@ -62,12 +53,10 @@ class PIIHandler:
             score_threshold=0.5
         )
         
-        # Anonymize the detected entities
         anonymized_result = self.anonymizer.anonymize(text=text, analyzer_results=results)
         
         detected_types = [res.entity_type for res in results]
         
-        # Composite Entity Detection (High-Risk Combinations)
         composite_risk = False
         if ("PERSON" in detected_types and "CNIC" in detected_types) or \
            ("STUDENT_ID" in detected_types and "EMAIL_ADDRESS" in detected_types) or \
